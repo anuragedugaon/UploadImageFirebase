@@ -1,20 +1,14 @@
 package com.example.practiceapp
 
-import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.provider.OpenableColumns
-import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 
@@ -25,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var gallaryAccess=findViewById<Button>(R.id.button)
+        val gallaryAccess=findViewById<Button>(R.id.button)
          imageView=findViewById<ImageView>(R.id.image)
 
 
@@ -50,10 +44,10 @@ class MainActivity : AppCompatActivity() {
                     val imageRef = storageRef.child("image/").child(fileName)
 
                     imageRef.putFile(imgUri)
-                        .addOnSuccessListener { taskSnapshot ->
+                        .addOnSuccessListener {
                             // File downloaded successfully
                             Toast.makeText(this, "upload success", Toast.LENGTH_SHORT).show()
-                            taskSnapshot.storage.downloadUrl.addOnSuccessListener { uri ->
+                            it.storage.downloadUrl.addOnSuccessListener { uri ->
                                 val downloadUrl = uri.toString()
                                 // Process the downloaded file or handle the download URL
                             }.addOnFailureListener { exception ->
